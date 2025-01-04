@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
+    unoptimized: true, // Disable image optimization
     domains: ["localhost", "generative-africa.firebaseapp.com"],
     remotePatterns: [
       {
