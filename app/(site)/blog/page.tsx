@@ -8,11 +8,19 @@ export const metadata: Metadata = {
 
 const BlogPage = async () => {
   // Fetch the blog data from the API
-  const response = await fetch("https://generativeafricablogs.onrender.com/blog/blogs/");
+  const response = await fetch("https://generativeafricablogs.onrender.com/blog/blogs/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store", // Prevent caching
+    },
+  });
   const result = await response.json();
 
   // Extract the blogs data
   const blogs = result.data || []; // Fallback to an empty array if data is undefined
+
+  console.log(blogs)
 
   return (
     <>
@@ -25,7 +33,7 @@ const BlogPage = async () => {
                 key={post.id}
                 blog={{
                   _id: post.id, // Include the required _id property
-                  mainImage: `https://generativeafricablogs.onrender.com${post.course_image}`, // Ensure the image URL is absolute
+                  mainImage: post.course_image, // Ensure the image URL is absolute
                   title: post.title,
                   metadata: post.introduction,
                   slug: post.slug,

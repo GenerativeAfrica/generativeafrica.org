@@ -19,32 +19,28 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title: "Generative Africa",
-    description: blogData.data.title, // Use the blog title as the description
+    description: blogData.data.title,
   };
 }
 
 const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   const slug = params.slug;
 
-  const res = await fetch(`https://generativeafricablogs.onrender.com/blog/blogs/${slug}`);
+  const res = await fetch(`https://generativeafricablogs.onrender.com/blog/blogs/${slug}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store", // Prevent caching
+    },
+  });
+
+  console.log(res)
   
   if (!res.ok) {
     return <div>Error: Unable to load the blog post</div>;
   }
   
   const blogData = await res.json();
-  const baseUrl = "https://generativeafricablogs.onrender.com"; 
-
-  const sectionsWithImages = blogData.data.sections.map((section: any) => {
-    let imagesInSection = blogData.data.blog_images.filter((image: any) => {
-      return new Date(image.created_at) < new Date(section.created_at);
-    });
-
-    return {
-      ...section,
-      images: imagesInSection,
-    };
-  });
 
   return (
     <>
@@ -53,10 +49,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
           <div className="flex flex-col-reverse gap-7.5 lg:flex-row xl:gap-12.5">
             <div className="md:w-1/2 lg:w-[32%]">
               <div className="animate_top mb-10 rounded-md border border-stroke bg-white p-3.5 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
-                <form
-                  action="https://formbold.com/s/unique_form_id"
-                  method="POST"
-                >
+                <form>
                   <div className="relative">
                     <input
                       type="text"
@@ -72,7 +65,6 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                         width="21"
                         height="21"
                         viewBox="0 0 21 21"
-                        fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path d="M16.031 14.617L20.314 18.899L18.899 20.314L14.617 16.031C13.0237 17.3082 11.042 18.0029 9 18C4.032 18 0 13.968 0 9C0 4.032 4.032 0 9 0C13.968 0 18 4.032 18 9C18.0029 11.042 17.3082 13.0237 16.031 14.617ZM14.025 13.875C15.2941 12.5699 16.0029 10.8204 16 9C16 5.132 12.867 2 9 2C5.132 2 2 5.132 2 9C2 12.867 5.132 16 9 16C10.8204 16.0029 12.5699 15.2941 13.875 14.025L14.025 13.875Z" />
@@ -102,7 +94,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                 <div className="mb-10 w-full overflow-hidden">
                   <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
                     <Image
-                      src={baseUrl + blogData.data.course_image}
+                      src={blogData.data.course_image}
                       alt={blogData.data.title}
                       fill
                       className="rounded-md object-cover object-center"
@@ -139,29 +131,38 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                 <div className="blog-details">
                   <p>{blogData.data.introduction}</p>
 
-                  {sectionsWithImages.map((section: any, index: number) => (
+                  {blogData.data.sections.map((section: any, index: number) => (
                     <div key={index}>
                       <h3 className="pt-8">{section.title}</h3>
                       <p>{section.content}</p>
-
-                      {section.images.map((image: any, imageIndex: number) => (
-                        <div key={imageIndex}>
-                          <Image
-                            src={baseUrl + image.image}
-                            alt={image.alt}
-                            width={800}
-                            height={600}
-                            className="rounded-md object-cover object-center"
-                          />
-                        </div>
-                      ))}
 
                       {section.subsections.map((subsection: any, subIndex: number) => (
                         <div key={subIndex}>
                           <h4>{subsection.title}</h4>
                           <p>{subsection.content}</p>
+                          {subsection.sub_section_image && (
+                            <Image
+                              src={subsection.sub_section_image}
+                              alt={subsection.title}
+                              width={800}
+                              height={600}
+                              className="rounded-md object-cover object-center"
+                            />
+                          )}
                         </div>
                       ))}
+                    </div>
+                  ))}
+
+                  {blogData.data.blog_images.map((image: any, imageIndex: number) => (
+                    <div key={imageIndex} className="my-6">
+                      <Image
+                        src={image.image}
+                        alt={image.alt}
+                        width={800}
+                        height={600}
+                        className="rounded-md object-cover object-center"
+                      />
                     </div>
                   ))}
                 </div>
