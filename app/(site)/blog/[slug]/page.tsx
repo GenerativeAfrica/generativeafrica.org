@@ -3,10 +3,25 @@ import SharePost from "@/components/Blog/SharePost";
 import { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "Generative Africa",
-  description: "Pioneering the Future of AI Innovation Across the Continent",
-};
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const slug = params.slug;
+
+  const res = await fetch(`https://generativeafricablogs.onrender.com/blog/blogs/${slug}`);
+  
+  if (!res.ok) {
+    return {
+      title: "Generative Africa",
+      description: "Unable to load the blog post",
+    };
+  }
+  
+  const blogData = await res.json();
+
+  return {
+    title: "Generative Africa",
+    description: blogData.data.title, // Use the blog title as the description
+  };
+}
 
 const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   const slug = params.slug;
@@ -124,13 +139,11 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                 <div className="blog-details">
                   <p>{blogData.data.introduction}</p>
 
-                  {/* Render sections with images */}
                   {sectionsWithImages.map((section: any, index: number) => (
                     <div key={index}>
                       <h3 className="pt-8">{section.title}</h3>
                       <p>{section.content}</p>
 
-                      {/* Display images in the section */}
                       {section.images.map((image: any, imageIndex: number) => (
                         <div key={imageIndex}>
                           <Image
