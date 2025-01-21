@@ -32,6 +32,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
       "Content-Type": "application/json",
       "Cache-Control": "no-store", // Prevent caching
     },
+    next: { revalidate: 0 }
   });
 
   console.log(res)
@@ -136,25 +137,41 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                       <h3 className="pt-8">{section.title}</h3>
                       <p>{section.content}</p>
 
-                      {section.subsections.map((subsection: any, subIndex: number) => (
-                        <div key={subIndex}>
-                          <h4>{subsection.title}</h4>
-                          <p>{subsection.content}</p>
-                          {subsection.sub_section_image && (
-                            <Image
-                              src={subsection.sub_section_image}
-                              alt={subsection.title}
-                              width={800}
-                              height={600}
-                              className="rounded-md object-cover object-center"
-                            />
-                          )}
+                      {/* Render the section image if it exists */}
+                      {section.section_image && (
+                        <div className="my-6">
+                          <Image
+                            src={section.section_image}
+                            alt={section.title}
+                            width={800}
+                            height={600}
+                            className="rounded-md object-cover object-center"
+                          />
                         </div>
-                      ))}
+                      )}
+
+                      {/* Render subsections only if they exist and are an array */}
+                      {section.subsections && Array.isArray(section.subsections) && (
+                        section.subsections.map((subsection: any, subIndex: number) => (
+                          <div key={subIndex}>
+                            <h4>{subsection.title}</h4>
+                            <p>{subsection.content}</p>
+                            {subsection.sub_section_image && (
+                              <Image
+                                src={subsection.sub_section_image}
+                                alt={subsection.title}
+                                width={800}
+                                height={600}
+                                className="rounded-md object-cover object-center"
+                              />
+                            )}
+                          </div>
+                        ))
+                      )}
                     </div>
                   ))}
 
-                  {blogData.data.blog_images.map((image: any, imageIndex: number) => (
+                  {blogData.data.blog_images?.map((image: any, imageIndex: number) => (
                     <div key={imageIndex} className="my-6">
                       <Image
                         src={image.image}

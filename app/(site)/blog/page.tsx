@@ -12,9 +12,11 @@ const BlogPage = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "no-store", // Prevent caching
+      "Cache-Control": "no-store"
     },
+    next: { revalidate: 0 }
   });
+  
   const result = await response.json();
 
   // Extract the blogs data
