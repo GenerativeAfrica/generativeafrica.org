@@ -121,12 +121,13 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                     <span className="text-black dark:text-white">Category: </span>
                     {blogData.data.category}
                   </li>
-                  <li>
+                  {blogData.data.course_link && 
+                  (<li>
                     <span className="text-black dark:text-white">Link: </span>
                     <a href={blogData.data.course_link} className="duration-300 ease-in-out hover:text-primary">
                       Course Link
                     </a>
-                  </li>
+                  </li>)}
                 </ul>
 
                 <div className="blog-details">

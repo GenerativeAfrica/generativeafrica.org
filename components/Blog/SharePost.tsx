@@ -80,7 +80,7 @@ const SharePost = () => {
           </li>
         </ul>
 
-        <ul className="flex items-center gap-4">
+        {/* <ul className="flex items-center gap-4">
           <li>
             <p className="text-black dark:text-white">Tags:</p>
           </li>
@@ -96,7 +96,7 @@ const SharePost = () => {
               #Reinforcement learning
             </a>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </>
   );
