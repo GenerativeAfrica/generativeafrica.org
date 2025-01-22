@@ -12,9 +12,9 @@ const BlogPage = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "no-store"
+      // "Cache-Control": "no-store"
     },
-    next: { revalidate: 0 }
+    // next: { revalidate: 0 }
   });
   
   const result = await response.json();

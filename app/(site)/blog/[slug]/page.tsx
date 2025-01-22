@@ -30,9 +30,9 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "no-store", // Prevent caching
+      // "Cache-Control": "no-store", // Prevent caching
     },
-    next: { revalidate: 0 }
+    // next: { revalidate: 0 }
   });
 
   console.log(res)
@@ -40,6 +40,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   if (!res.ok) {
     return <div>Error: Unable to load the blog post</div>;
   }
+  
   
   const blogData = await res.json();
 
@@ -145,6 +146,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                             src={section.section_image}
                             alt={section.title}
                             width={800}
+                            
                             height={600}
                             className="rounded-md object-cover object-center"
                           />
