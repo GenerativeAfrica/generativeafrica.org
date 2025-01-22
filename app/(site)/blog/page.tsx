@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const BlogPage = async () => {
-  // Fetch the blog data from the API
+  // Fetch the blog data from the API 1
   const response = await fetch("https://generativeafricablogs.onrender.com/blog/blogs/", {
     method: "GET",
     headers: {
