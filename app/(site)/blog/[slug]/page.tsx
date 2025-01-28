@@ -49,7 +49,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
       <section className="pb-20 pt-35 lg:pb-25 lg:pt-45 xl:pb-30 xl:pt-50">
         <div className="mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
           <div className="flex flex-col-reverse gap-7.5 lg:flex-row xl:gap-12.5">
-            <div className="md:w-1/2 lg:w-[32%]">
+            {/* <div className="md:w-1/2 lg:w-[32%]">
               <div className="animate_top mb-10 rounded-md border border-stroke bg-white p-3.5 shadow-solid-13 dark:border-strokedark dark:bg-blacksection">
                 <form>
                   <div className="relative">
@@ -89,9 +89,9 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
               </div>
 
               <RelatedPost />
-            </div>
+            </div> */}
 
-            <div className="lg:w-2/3">
+            <div className="lg:w-full">
               <div className="animate_top rounded-md border border-stroke bg-white p-7.5 shadow-solid-13 dark:border-strokedark dark:bg-blacksection md:p-10">
                 <div className="mb-10 w-full overflow-hidden">
                   <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
@@ -187,7 +187,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                   ))}
                 </div>
 
-                <SharePost />
+                {/* <SharePost /> */}
               </div>
             </div>
           </div>
