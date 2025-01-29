@@ -4,8 +4,24 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+// Utility function to process text
+const processText = (text: string) => {
+  // Replace <st>...</st> with <strong>...</strong>
+  text = text.replace(/<st>(.*?)<\/st>/g, '$1');
+  
+  // Replace <n/> with <br />
+  text = text.replace(/<n\/>/g, '<br />');
+  
+  // Replace <b/> with • (bullet point)
+  text = text.replace(/<b\/>/g, '• ');
+  
+  return text;
+};
+
 const BlogItem = ({ blog }: { blog: Blog }) => {
   const { mainImage, title, metadata, slug } = blog; // Include slug
+
+  const metadataIntro = processText(metadata || "");
 
   return (
     <>
@@ -33,10 +49,10 @@ const BlogItem = ({ blog }: { blog: Blog }) => {
         <div className="px-4">
           <h3 className="mb-3.5 mt-7.5 line-clamp-2 inline-block text-lg font-medium text-black duration-300 hover:text-primary dark:text-white dark:hover:text-primary xl:text-itemtitle2">
             <Link href={`/blog/${slug}`}>
-              {`${title.slice(0, 40)}...`}
+              {`${title.slice(0, 70)}`}
             </Link>
           </h3>
-          <p className="line-clamp-3">{metadata}</p>
+          <p className="line-clamp-3">{metadataIntro}</p>
         </div>
       </motion.div>
     </>
