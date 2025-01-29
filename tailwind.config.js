@@ -143,5 +143,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase }) {
+      addBase({
+        strong: {
+          color: "#181C31", // Use your black color
+          fontWeight: "bold", // Ensure the text is bold
+        },
+      });
+    },
+  ],
 };

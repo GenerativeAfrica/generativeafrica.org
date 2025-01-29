@@ -125,3 +125,9 @@ pre {
 .active-tab {
   @apply bg-stroke text-black dark:bg-blackho dark:text-white;
 }
+
+
+strong {
+  color: #181C31; 
+  font-weight: bold;
+}
