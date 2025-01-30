@@ -84,10 +84,14 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   // Process section content and subsection content
   blogData.data.sections = blogData.data.sections?.map((section: any) => {
     section.content = processText(section.content);
-    section.subsections = section.subsections?.map((subsection: any) => {
-      subsection.content = processText(subsection.content);
-      return subsection;
-    });
+    if (section.subsections && Array.isArray(section.subsections)) {
+      // Sort subsections by created_at
+      section.subsections.sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      section.subsections = section.subsections.map((subsection: any) => {
+        subsection.content = processText(subsection.content);
+        return subsection;
+      });
+    }
     return section;
   });
 
@@ -109,18 +113,20 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   const mergedContent = [
     ...blogImages.map((image: any) => ({
       type: 'image',
+      name: image.alt,
       data: image,
       created_at: image.created_at || blogData.data.created_at, // Fallback to blog creation time if image doesn't have its own timestamp
     })),
     ...sections.map((section: any) => ({
       type: 'section',
+      name: section.title,
       data: section,
       created_at: section.created_at || blogData.data.created_at, // Fallback to blog creation time if section doesn't have its own timestamp
     })),
   ];
 
   // Sort the merged content by created_at
-  console.log("Before sorting:", mergedContent.map(item => item.created_at));
+  console.log("Before sorting:", mergedContent.map(item => (item.created_at, item.name)));
   mergedContent.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
   console.log("After sorting:", mergedContent.map(item => item.created_at));
 
