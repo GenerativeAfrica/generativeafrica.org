@@ -13,6 +13,8 @@ const processText = (text: string) => {
   
   // Replace <b/> with • (bullet point)
   text = text.replace(/<b\/>/g, '• ');
+
+  console.log("Processed text:", text);
   
   return text;
 };
@@ -34,6 +36,25 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: "Generative Africa",
     description: blogData.data.title,
+    openGraph: {
+      title: blogData.data.title,
+      description: blogData.data.introduction, 
+      images: [
+        {
+          url: blogData.data.course_image, 
+          width: 800,
+          height: 600,
+          alt: blogData.data.title,
+        },
+      ],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: blogData.data.title,
+      description: blogData.data.introduction,
+      images: [blogData.data.course_image],
+    },
   };
 }
 
@@ -70,6 +91,16 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
     return section;
   });
 
+  // Process any other text fields if necessary
+  // For example, if there are other fields like 'summary', 'conclusion', etc., process them as well
+  if (blogData.data.summary) {
+    blogData.data.summary = processText(blogData.data.summary);
+  }
+
+  if (blogData.data.conclusion) {
+    blogData.data.conclusion = processText(blogData.data.conclusion);
+  }
+
   // Ensure blog_images and sections are arrays before merging
   const blogImages = Array.isArray(blogData.data.blog_images) ? blogData.data.blog_images : [];
   const sections = Array.isArray(blogData.data.sections) ? blogData.data.sections : [];
@@ -89,7 +120,9 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   ];
 
   // Sort the merged content by created_at
+  console.log("Before sorting:", mergedContent.map(item => item.created_at));
   mergedContent.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+  console.log("After sorting:", mergedContent.map(item => item.created_at));
 
   return (
     <>
@@ -143,13 +176,21 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
                     if (item.type === 'image') {
                       return (
                         <div key={index} className="my-6">
-                          <Image
-                            src={item.data.image}
-                            alt={item.data.alt}
-                            width={800}
-                            height={600}
-                            className="rounded-md object-cover object-center"
-                          />
+                          <figure>
+                            <Image
+                              src={item.data.image}
+                              alt={item.data.alt}
+                              width={800}
+                              height={600}
+                              className="rounded-md object-cover object-center"
+                            />
+                            {/* Display caption if it exists */}
+                            {item.data.caption && (
+                              <figcaption className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+                                {item.data.caption}
+                              </figcaption>
+                            )}
+                          </figure>
                         </div>
                       );
                     } else if (item.type === 'section') {
