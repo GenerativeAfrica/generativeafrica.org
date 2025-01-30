@@ -67,7 +67,8 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
       "Content-Type": "application/json",
       // "Cache-Control": "no-store", // Prevent caching
     },
-    next: { revalidate: 0 }
+    // remove revalidate to disable ISR
+    //next: { revalidate: 0 }
   });
 
   console.log(res)
