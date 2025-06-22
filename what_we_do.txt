@@ -1,0 +1,39 @@
+What We Do:
+
+1. Mental Health Chatbots with AI
+   Description: We build intelligent conversational agents that deliver authentic, human-like support. Our flagship product, WellCareBot, uses Langchain, Retrieval-Augmented Generation (RAG), Flutter, and Firebase to provide real-time mental wellness assistance.
+   Details:
+   - Smart context-aware responses
+   - Flask-based APIs with scalable architecture
+   - Firebase-powered chat history and storage
+   - Professional cross-platform mobile UI
+
+2. Cross-Platform Mobile App Development
+   Description: We transform business ideas into fully functional mobile apps using Flutter and integrate them with cloud or web systems.
+   Details:
+   - Web-to-mobile app conversions
+   - Offline-ready apps with database sync
+   - Modern, clean UI/UX with Material and Cupertino styles
+
+3. Custom POS & Inventory Solutions
+   Description: We develop business-specific Point-of-Sale (POS) and Inventory Management Systems to track sales, stock, and customer activity.
+   Details:
+   - Canteen POS System: Designed for schools, with purchase records, receipt generation, and student/teacher transaction histories.
+   - Kensoft POS: Tailored for hardware stores, optimized for simplicity and real-time performance.
+   - ChemAli Stock Manager: Multi-location inventory tracking, built in Flutter, with real-time updates and intuitive dashboards.
+
+4. Travel & Booking Platforms
+   Description: We help travel and hospitality businesses boost visibility through elegant and efficient web solutions.
+   Details:
+   - Static and dynamic websites with itinerary showcase
+   - Custom booking inquiry forms
+   - Fully mobile-responsive experiences
+   - Built with React, Next.js, or Vanilla JavaScript
+   - Recent project: Wunderschön Safaris website – A mobile-first platform for showcasing safaris and managing customer interest.
+
+5. Website Development with Modern Frameworks
+   Description: We design modern, responsive websites using React, JavaScript (ES6+), and Next.js — optimized for performance, SEO, and user experience.
+   Details:
+   - Landing pages, dashboards, and admin portals
+   - API integration and backend communication
+   - Server-side rendering (SSR) and static site generation (SSG)
