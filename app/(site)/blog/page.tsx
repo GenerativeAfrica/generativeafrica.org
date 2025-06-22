@@ -17,10 +17,17 @@ const BlogPage = async () => {
     //next: { revalidate: 0 }
   });
   
-  const result = await response.json();
-
-  // Extract the blogs data
-  const blogs = result.data || []; // Fallback to an empty array if data is undefined
+  let blogs = [];
+  try {
+    const result = await response.json();
+    // Extract the blogs data
+    blogs = result.data || []; // Fallback to an empty array if data is undefined
+  } catch (error) {
+    console.error("Error parsing blog data:", error);
+    const errorText = await response.text();
+    console.error("Raw response from API:", errorText);
+    // Optionally, set a user-friendly message or handle the error in the UI
+  }
 
   console.log(blogs)
 
@@ -30,7 +37,7 @@ const BlogPage = async () => {
       <section className="py-20 lg:py-25 xl:py-30">
         <div className="mx-auto mt-15 max-w-c-1280 px-4 md:px-8 xl:mt-20 xl:px-0">
           <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-10">
-            {blogs.map((post) => (
+            {blogs.map((post: any) => (
               <BlogItem
                 key={post.id}
                 blog={{
